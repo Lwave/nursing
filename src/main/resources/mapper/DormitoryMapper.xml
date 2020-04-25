@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.DormitoryMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.entity.Dormitory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bedCount" jdbcType="INTEGER" property="bedcount" />
+    <result column="roomNum" jdbcType="VARCHAR" property="roomnum" />
+    <result column="layerNum" jdbcType="INTEGER" property="layernum" />
+    <result column="dormNum" jdbcType="VARCHAR" property="dormnum" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, bedCount, roomNum, layerNum, dormNum, note
+  </sql>
+  <select id="selectByExample" parameterType="com.ssm.entity.DormitoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dormitory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dormitory
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dormitory
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.entity.DormitoryExample">
+    delete from dormitory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.entity.Dormitory">
+    insert into dormitory (id, bedCount, roomNum, 
+      layerNum, dormNum, note
+      )
+    values (#{id,jdbcType=INTEGER}, #{bedcount,jdbcType=INTEGER}, #{roomnum,jdbcType=VARCHAR}, 
+      #{layernum,jdbcType=INTEGER}, #{dormnum,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.entity.Dormitory">
+    insert into dormitory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bedcount != null">
+        bedCount,
+      </if>
+      <if test="roomnum != null">
+        roomNum,
+      </if>
+      <if test="layernum != null">
+        layerNum,
+      </if>
+      <if test="dormnum != null">
+        dormNum,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bedcount != null">
+        #{bedcount,jdbcType=INTEGER},
+      </if>
+      <if test="roomnum != null">
+        #{roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="layernum != null">
+        #{layernum,jdbcType=INTEGER},
+      </if>
+      <if test="dormnum != null">
+        #{dormnum,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.entity.DormitoryExample" resultType="java.lang.Long">
+    select count(*) from dormitory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dormitory
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.bedcount != null">
+        bedCount = #{record.bedcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.roomnum != null">
+        roomNum = #{record.roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.layernum != null">
+        layerNum = #{record.layernum,jdbcType=INTEGER},
+      </if>
+      <if test="record.dormnum != null">
+        dormNum = #{record.dormnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dormitory
+    set id = #{record.id,jdbcType=INTEGER},
+      bedCount = #{record.bedcount,jdbcType=INTEGER},
+      roomNum = #{record.roomnum,jdbcType=VARCHAR},
+      layerNum = #{record.layernum,jdbcType=INTEGER},
+      dormNum = #{record.dormnum,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.entity.Dormitory">
+    update dormitory
+    <set>
+      <if test="bedcount != null">
+        bedCount = #{bedcount,jdbcType=INTEGER},
+      </if>
+      <if test="roomnum != null">
+        roomNum = #{roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="layernum != null">
+        layerNum = #{layernum,jdbcType=INTEGER},
+      </if>
+      <if test="dormnum != null">
+        dormNum = #{dormnum,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.entity.Dormitory">
+    update dormitory
+    set bedCount = #{bedcount,jdbcType=INTEGER},
+      roomNum = #{roomnum,jdbcType=VARCHAR},
+      layerNum = #{layernum,jdbcType=INTEGER},
+      dormNum = #{dormnum,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

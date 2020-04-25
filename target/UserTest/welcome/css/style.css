@@ -1,0 +1,102 @@
+html, body, p {
+     border: 0 none;
+     margin: 0;
+	 padding:0;
+     outline-style: none;
+     outline-width: 0;
+     vertical-align: baseline;
+	 font-size: 12px;
+}
+/*--------------------------------------------
+container
+--------------------------------------------*/
+div#container {
+     width: 100%;
+     margin: 0 auto;
+     overflow: hidden;
+}
+div.examples_body {
+     width: 1150px;
+	 margin: 20px auto 0 auto;
+	 clear: both;
+	 overflow: hidden;
+	 position: relative;
+}
+
+
+/* The main banner unordered list */
+.bannerHolder {
+     width: 1112px;
+	 margin: 10px 0 15px 0;
+	 padding: 20px 10px 20px 10px;
+	 background-color: #f7f7f7;
+	 border: 0px solid #eee;
+	 overflow: hidden;
+
+	/* CSS3 rounded corners */
+	 -moz-border-radius:12px;
+	 -webkit-border-radius:12px;
+	 border-radius:12px;
+}
+
+/* Hiding the bullets of the li elements: */
+.bannerHolder li {
+	 list-style: none;
+	 display: inline;
+	 text-decoration: none;
+}
+
+/* The banner divs */
+.banner {
+     width: 350px;
+	 height: 400px;
+	 position: relative;
+	 overflow: hidden;
+	 float: left;
+	 display: inline;
+	 margin: 0 10px
+}
+
+/* The banner divs */
+.banner img {
+	 display: block;
+	 border: none;
+}
+
+/* The dark animated divs */
+.banner div {
+	 position: absolute;
+	 z-index: 100;
+	 background-color: #222;
+	 width: 60px;
+	 height: 60px;
+	 cursor: pointer;
+
+	/*	Setting a really big value for border-radius
+		will make the divs perfect circles */
+	 -moz-border-radius:100px;
+	 -webkit-border-radius:100px;
+	 border-radius:100px;
+}
+
+/*	Positioning the animated divs outside the
+	corners of the visible banner area: */
+/*.banner .cornerTL { left:-63px; top:-63px; }
+.banner .cornerTR { right:-63px; top:-63px; }
+.banner .cornerBL { left:-63px; bottom:-63px; }*/
+.banner .cornerBR { right:-63px; bottom:-63px; }
+
+/* The "Visit Company" text */
+.banner p {
+     width: 100%;
+	 left: 0;
+	 top: 57px;
+	 z-index: 200;
+	 position: absolute;
+	 font-family: Tahoma, Arial, Helvetica, sans-serif;
+	 color: #FFF;
+	 font-size: 16px;
+	 /*text-align: center;*/
+	 cursor: pointer;
+	 display: none;	/* hidden by default */
+}

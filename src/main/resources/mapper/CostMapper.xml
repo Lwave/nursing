@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.CostMapper">
+    <resultMap id="BaseResultMap" type="com.ssm.entity.Cost">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="bid" jdbcType="INTEGER" property="bid"/>
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="costDate" jdbcType="TIMESTAMP" property="costdate"/>
+        <result column="eaxmCost" jdbcType="DOUBLE" property="eaxmcost"/>
+        <result column="foodCost" jdbcType="DOUBLE" property="foodcost"/>
+        <result column="lineCost" jdbcType="DOUBLE" property="linecost"/>
+        <result column="orderStatus" jdbcType="INTEGER" property="orderstatus"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, bid, uid, costDate, eaxmCost, foodCost, lineCost, orderStatus
+    </sql>
+    <select id="selectByExample" parameterType="com.ssm.entity.CostExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from cost
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cost
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from cost
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ssm.entity.CostExample">
+        delete from cost
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ssm.entity.Cost">
+        insert into cost (id, bid, uid,
+                          costDate, eaxmCost, foodCost,
+                          lineCost, orderStatus)
+        values (#{id,jdbcType=INTEGER}, #{bid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER},
+                #{costdate,jdbcType=TIMESTAMP}, #{eaxmcost,jdbcType=DOUBLE}, #{foodcost,jdbcType=DOUBLE},
+                #{linecost,jdbcType=DOUBLE}, #{orderstatus,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ssm.entity.Cost">
+        insert into cost
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="bid != null">
+                bid,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="costdate != null">
+                costDate,
+            </if>
+            <if test="eaxmcost != null">
+                eaxmCost,
+            </if>
+            <if test="foodcost != null">
+                foodCost,
+            </if>
+            <if test="linecost != null">
+                lineCost,
+            </if>
+            <if test="orderstatus != null">
+                orderStatus,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="bid != null">
+                #{bid,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="costdate != null">
+                #{costdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="eaxmcost != null">
+                #{eaxmcost,jdbcType=DOUBLE},
+            </if>
+            <if test="foodcost != null">
+                #{foodcost,jdbcType=DOUBLE},
+            </if>
+            <if test="linecost != null">
+                #{linecost,jdbcType=DOUBLE},
+            </if>
+            <if test="orderstatus != null">
+                #{orderstatus,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ssm.entity.CostExample" resultType="java.lang.Long">
+        select count(*) from cost
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update cost
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.bid != null">
+                bid = #{record.bid,jdbcType=INTEGER},
+            </if>
+            <if test="record.uid != null">
+                uid = #{record.uid,jdbcType=INTEGER},
+            </if>
+            <if test="record.costdate != null">
+                costDate = #{record.costdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.eaxmcost != null">
+                eaxmCost = #{record.eaxmcost,jdbcType=DOUBLE},
+            </if>
+            <if test="record.foodcost != null">
+                foodCost = #{record.foodcost,jdbcType=DOUBLE},
+            </if>
+            <if test="record.linecost != null">
+                lineCost = #{record.linecost,jdbcType=DOUBLE},
+            </if>
+            <if test="record.orderstatus != null">
+                orderStatus = #{record.orderstatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update cost
+        set id = #{record.id,jdbcType=INTEGER},
+        bid = #{record.bid,jdbcType=INTEGER},
+        uid = #{record.uid,jdbcType=INTEGER},
+        costDate = #{record.costdate,jdbcType=TIMESTAMP},
+        eaxmCost = #{record.eaxmcost,jdbcType=DOUBLE},
+        foodCost = #{record.foodcost,jdbcType=DOUBLE},
+        lineCost = #{record.linecost,jdbcType=DOUBLE},
+        orderStatus = #{record.orderstatus,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ssm.entity.Cost">
+        update cost
+        <set>
+            <if test="bid != null">
+                bid = #{bid,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="costdate != null">
+                costDate = #{costdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="eaxmcost != null">
+                eaxmCost = #{eaxmcost,jdbcType=DOUBLE},
+            </if>
+            <if test="foodcost != null">
+                foodCost = #{foodcost,jdbcType=DOUBLE},
+            </if>
+            <if test="linecost != null">
+                lineCost = #{linecost,jdbcType=DOUBLE},
+            </if>
+            <if test="orderstatus != null">
+                orderStatus = #{orderstatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ssm.entity.Cost">
+        update cost
+        set bid         = #{bid,jdbcType=INTEGER},
+            uid         = #{uid,jdbcType=INTEGER},
+            costDate    = #{costdate,jdbcType=TIMESTAMP},
+            eaxmCost    = #{eaxmcost,jdbcType=DOUBLE},
+            foodCost    = #{foodcost,jdbcType=DOUBLE},
+            lineCost    = #{linecost,jdbcType=DOUBLE},
+            orderStatus = #{orderstatus,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!--classify与bed-->
+    <resultMap type="com.ssm.entity.Cost" id="my2">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="bid" property="bid"/>
+        <result column="costDate" property="costdate"/>
+        <result column="eaxmCost" property="eaxmcost"/>
+        <result column="foodCost" property="foodcost"/>
+        <result column="lineCost" property="linecost"/>
+        <result column="orderStatus" property="orderstatus"/>
+        <!-- 关联对象 -->
+        <association property="bed" javaType="com.ssm.entity.Bed">
+            <!-- 关联条件bed的dormId对应着domitory的id -->
+            <id column="cid" property="id"/>
+            <result column="uid" property="uid"/>
+            <result column="dormId" property="dormid"/>
+            <result column="describle" property="describle"/>
+            <result column="price" property="price"/>
+            <result column="status" property="status"/>
+            <result column="icon" property="icon"/>
+        </association>
+        <!-- 关联对象 -->
+        <association property="user" javaType="com.ssm.entity.User">
+            <!-- 关联条件bed的uid对应着user的id -->
+            <id column="uid" property="id"/>
+            <result column="userName" property="username"/>
+            <result column="password" property="password"/>
+            <result column="gender" property="gender"/>
+            <result column="age" property="age"/>
+            <result column="phone" property="phone"/>
+            <result column="email" property="email"/>
+            <result column="birthday" property="birthday"/>
+            <result column="createDate" property="createdate"/>
+            <result column="role" property="role"/>
+        </association>
+    </resultMap>
+    <!-- resultMap指定使用上面定义的结果集,查询使用关联查询，查询列要和上面的column对应 -->
+    <select id="CostbedUser" resultMap="my2">
+        select cost.uid,
+               cost.id,
+               cost.bid,
+               user.username,
+               bed.status,
+               bed.price,
+               cost.costDate,
+               cost.eaxmCost,
+               cost.foodCost,
+               cost.lineCost,
+               cost.orderStatus
+        from bed,
+             user,
+             cost
+        where bed.id = cost.bid
+          and cost.uid = user.id
+      /*    and bed.status = 2*/
+
+    </select>
+
+    <resultMap type="com.ssm.entity.Cost" id="my3">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="bid" property="bid"/>
+        <result column="costDate" property="costdate"/>
+        <result column="eaxmCost" property="eaxmcost"/>
+        <result column="foodCost" property="foodcost"/>
+        <result column="lineCost" property="linecost"/>
+        <result column="orderStatus" property="orderstatus"/>
+        <!-- 关联对象 -->
+        <association property="bed" javaType="com.ssm.entity.Bed">
+            <!-- 关联条件bed的dormId对应着domitory的id -->
+            <id column="cid" property="id"/>
+            <result column="uid" property="uid"/>
+            <result column="dormId" property="dormid"/>
+            <result column="describle" property="describle"/>
+            <result column="price" property="price"/>
+            <result column="status" property="status"/>
+            <result column="icon" property="icon"/>
+        </association>
+    </resultMap>
+    <!-- resultMap指定使用上面定义的结果集,查询使用关联查询，查询列要和上面的column对应 -->
+    <select id="bedCost" resultMap="my3">
+        select bed.uid,
+            cost.uid,
+               cost.id,
+               cost.bid,
+               user.username,
+               bed.status,
+               cost.costDate,
+               cost.eaxmCost,
+               cost.foodCost,
+               cost.lineCost,
+               cost.orderStatus
+        from bed,
+             cost
+        where bed.id = cost.bid
+          and bed.uid = cost.uid
+    </select>
+    <!--通过uid查询cost表记录-->
+    <resultMap type="com.ssm.entity.Cost" id="c">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="bid" property="bid"/>
+        <result column="costDate" property="costdate"/>
+        <result column="eaxmCost" property="eaxmcost"/>
+        <result column="foodCost" property="foodcost"/>
+        <result column="lineCost" property="linecost"/>
+        <result column="orderStatus" property="orderstatus"/>
+        <!-- 关联对象 -->
+        <association property="bed" javaType="com.ssm.entity.Bed">
+            <!-- 关联条件bed的dormId对应着domitory的id -->
+            <id column="bid" property="id"/>
+            <result column="uid" property="uid"/>
+            <result column="dormId" property="dormid"/>
+            <result column="describle" property="describle"/>
+            <result column="price" property="price"/>
+            <result column="status" property="status"/>
+            <result column="icon" property="icon"/>
+        </association>
+        <association property="user" javaType="com.ssm.entity.User">
+            <!-- 关联条件bed的dormId对应着domitory的id -->
+            <id column="uid" property="id"/>
+            <result column="userName" property="username"/>
+            <result column="password" property="password"/>
+            <result column="gender" property="gender"/>
+            <result column="age" property="age"/>
+            <result column="phone" property="phone"/>
+            <result column="email" property="email"/>
+            <result column="birthday" property="birthday"/>
+            <result column="createDate" property="createdate"/>
+            <result column="role" property="role"/>
+        </association>
+    </resultMap>
+
+    <select id="selectCostByUid" resultMap="c">
+     select cost.* ,bed.price,bed.dormId ,user.userName from cost,bed,user
+     where cost.uid = #{uid}
+     and user.id = cost.uid
+     and cost.bid = bed.id
+     and  cost.uid = #{id}
+    </select>
+    <!--更新状态-->
+    <update id="updateOrderStatus" parameterType="com.ssm.entity.Cost">
+        update cost
+        <trim prefix="set" suffixOverrides=",">
+            <!-- <if test="status=0">status=2</if>-->
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
+            <if test="bid != null">
+                bid = #{bid},
+            </if>
+            <if test="costDate != null">
+                costDate = #{costDate},
+            </if>
+            <if test="orderStatus != null">
+                orderStatus= #{orderStatus}
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+</mapper>

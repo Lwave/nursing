@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--扫描service  dao-->
+    <context:component-scan base-package="com.ssm.service,com.ssm.dao"></context:component-scan>
+    <!--加载properties文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+    <context:component-scan base-package="com.ssm.util"></context:component-scan>
+
+    <!--spring整合mybatis:mybatis   spring-mybatis -->
+    <!-- 整合mybatis：数据源+mapper映射 -->
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${driverClassName}">
+        </property>
+        <property name="url" value="${url}">
+        </property>
+        <property name="username" value="${user}">
+        </property>
+        <property name="password" value="${password}">
+        </property>
+    </bean>
+
+    <!-- 配置mapper扫描    Mapper接口所在的包   -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.ssm.dao"/>
+    </bean>
+
+    <bean id="dormitoryService" class="com.ssm.service.impl.DormitoryServiceImpl">
+    </bean>
+
+    <!-- SqlSessionFactory    xxMapper.xml-->
+    <bean id="sqlSessionFactory"
+          class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations"
+                  value="classpath:mapper/*Mapper.xml"/>
+        <property name="configLocation"
+                  value="classpath:mybatis-config.xml"/>
+    </bean>
+
+    <!--整合Redis-->
+    <!--加载redis.properties属性文件-->
+    <context:property-placeholder location="classpath:redis.properties"></context:property-placeholder>
+    <!-- 获取redis数据库连接池配置 -->
+   <!-- <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${redis.maxWait}"/>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+    </bean>-->
+
+    <!-- redis服务器中心，类似数据库连接池 -->
+    <!--<bean id="connectionFactory1"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="${redis.host}"></property>
+        <property name="port" value="${redis.port}"></property>
+        <property name="password" value="${redis.pass}"></property>
+        <property name="poolConfig" ref="poolConfig"></property>
+        <property name="timeout" value="${redis.timeout}"></property>
+    </bean>-->
+
+    <!-- 调用连接池工厂配置 -->
+   <!-- <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory1"></property>
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+        </property>
+    </bean>-->
+
+
+</beans>

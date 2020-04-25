@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.BedMapper">
+    <resultMap id="BaseResultMap" type="com.ssm.entity.Bed">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="dormId" jdbcType="INTEGER" property="dormid"/>
+        <result column="describle" jdbcType="VARCHAR" property="describle"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, uid, dormId, describle, price, status, icon
+    </sql>
+    <select id="selectByExample" parameterType="com.ssm.entity.BedExample" resultMap="BaseResultMap">
+        from bed
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from bed
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bed
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from bed
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ssm.entity.BedExample">
+        delete from bed
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ssm.entity.Bed">
+        insert into bed (id, uid, dormId,
+                         describle, price, status,
+                         icon)
+        values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{dormid,jdbcType=INTEGER},
+                #{describle,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER},
+                #{icon,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ssm.entity.Bed">
+        insert into bed
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="dormid != null">
+                dormId,
+            </if>
+            <if test="describle != null">
+                describle,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="dormid != null">
+                #{dormid,jdbcType=INTEGER},
+            </if>
+            <if test="describle != null">
+                #{describle,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ssm.entity.BedExample" resultType="java.lang.Long">
+        select count(*) from bed
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update bed
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.uid != null">
+                uid = #{record.uid,jdbcType=INTEGER},
+            </if>
+            <if test="record.dormid != null">
+                dormId = #{record.dormid,jdbcType=INTEGER},
+            </if>
+            <if test="record.describle != null">
+                describle = #{record.describle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.price != null">
+                price = #{record.price,jdbcType=DOUBLE},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=INTEGER},
+            </if>
+            <if test="record.icon != null">
+                icon = #{record.icon,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update bed
+        set id = #{record.id,jdbcType=INTEGER},
+        uid = #{record.uid,jdbcType=INTEGER},
+        dormId = #{record.dormid,jdbcType=INTEGER},
+        describle = #{record.describle,jdbcType=VARCHAR},
+        price = #{record.price,jdbcType=DOUBLE},
+        status = #{record.status,jdbcType=INTEGER},
+        icon = #{record.icon,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ssm.entity.Bed">
+        update bed
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="dormid != null">
+                dormId = #{dormid,jdbcType=INTEGER},
+            </if>
+            <if test="describle != null">
+                describle = #{describle,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ssm.entity.Bed">
+        update bed
+        set uid       = #{uid,jdbcType=INTEGER},
+            dormId    = #{dormid,jdbcType=INTEGER},
+            describle = #{describle,jdbcType=VARCHAR},
+            price     = #{price,jdbcType=DOUBLE},
+            status    = #{status,jdbcType=INTEGER},
+            icon      = #{icon,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!--    <select id="selectAllBed" resultType="com.ssm.entity.Bed">
+            select user.userName,
+                   bed.status,
+                   bed.price,
+                   bed.describle,
+                   dormitory.bedCount,
+                   dormitory.dormNum,
+                   domitory.roomNum,
+                   dormitory.layerNum,
+                   bed.icon
+                /*   from bed
+                            JOIN user ON user.id = bed.uid
+                            JOIN dormitory ON bed.dormId = dormitory.id*/
+            from bed,
+                 user,
+                 dormitory
+            where
+                user.id = bed.uid and  bed.dormId = dormitory.id
+        </select>-->
+    <resultMap type="com.ssm.entity.Bed" id="myEmp">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="dormId" property="dormid"/>
+        <result column="describle" property="describle"/>
+        <result column="price" property="price"/>
+        <result column="status" property="status"/>
+        <result column="icon" property="icon"/>
+        <!-- 关联对象 -->
+        <association property="dormitory" javaType="com.ssm.entity.Dormitory">
+            <!-- 关联条件bed的dormId对应着domitory的id -->
+            <id column="dormId" property="id"/>
+            <result column="bedCount" property="bedcount"/>
+            <result column="roomNum" property="roomnum"/>
+            <result column="layerNum" property="layernum"/>
+            <result column="dormNum" property="dormnum"/>
+            <result column="note" property="note"/>
+        </association>
+        <!-- 关联对象 -->
+        <association property="user" javaType="com.ssm.entity.User">
+            <!-- 关联条件bed的uid对应着user的id -->
+            <id column="uid" property="id"/>
+            <result column="userName" property="username"/>
+            <result column="password" property="password"/>
+            <result column="gender" property="gender"/>
+            <result column="age" property="age"/>
+            <result column="phone" property="phone"/>
+            <result column="email" property="email"/>
+            <result column="birthday" property="birthday"/>
+            <result column="createDate" property="createdate"/>
+            <result column="role" property="role"/>
+        </association>
+    </resultMap>
+    <!-- resultMap指定使用上面定义的结果集,查询使用关联查询，查询列要和上面的column对应 -->
+    <select id="selectAllBed" resultMap="myEmp">
+        select bed.id,
+               bed.icon,
+               bed.uid,
+               bed.dormId,
+               user.userName as userName,
+               user.id       as id,
+               bed.status,
+               bed.price,
+               bed.describle,
+               dormitory.id,
+               dormitory.bedCount,
+               dormitory.dormNum,
+               dormitory.roomNum,
+               dormitory.layerNum
+        from user,
+             bed,
+             dormitory
+        where user.id = bed.uid
+          and bed.dormId = dormitory.id
+          and bed.uid is not null
+    </select>
+
+    <resultMap type="com.ssm.entity.Bed" id="my">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="dormId" property="dormid"/>
+        <result column="describle" property="describle"/>
+        <result column="price" property="price"/>
+        <result column="status" property="status"/>
+        <result column="icon" property="icon"/>
+        <!-- 关联对象 -->
+        <association property="dormitory" javaType="com.ssm.entity.Dormitory">
+            <!-- 关联条件bed的dormId对应着domitory的id -->
+            <id column="dormId" property="id"/>
+            <result column="bedCount" property="bedcount"/>
+            <result column="roomNum" property="roomnum"/>
+            <result column="layerNum" property="layernum"/>
+            <result column="dormNum" property="dormnum"/>
+            <result column="note" property="note"/>
+        </association>
+    </resultMap>
+    <!-- resultMap指定使用上面定义的结果集,查询使用关联查询，查询列要和上面的column对应 -->
+    <select id="selectBedNoUser" resultMap="my">
+        select bed.id,
+               bed.uid,
+               bed.dormId,
+               bed.icon,
+               bed.status,
+               bed.price,
+               bed.describle,
+               dormitory.bedCount,
+               dormitory.dormNum,
+               dormitory.roomNum,
+               dormitory.layerNum
+        from bed,
+             dormitory
+        where bed.dormId = dormitory.id
+          and bed.status = 0
+    </select>
+    <select id="selectSigleBed" resultType="com.ssm.entity.Bed">
+        select *
+        from bed
+    </select>
+    <update id="updateBedStatus" parameterType="com.ssm.entity.Bed">
+        update bed
+        <trim prefix="set" suffixOverrides=",">
+            <!-- <if test="status=0">status=2</if>-->
+            <if test="uid != null">
+                uid = #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="dormid != null">
+                dormId = #{dormid,jdbcType=INTEGER},
+            </if>
+            <if test="describle != null">
+                describle = #{describle,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null and status=0">
+                status = #{status} ,
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+ <!--   &lt;!&ndash;数据回显&ndash;&gt;
+    <update id="" parameterType="">
+
+    </update>-->
+</mapper>

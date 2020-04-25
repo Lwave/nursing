@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.ssm.entity.User">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="userName" jdbcType="VARCHAR" property="username" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="gender" jdbcType="INTEGER" property="gender" />
+        <result column="age" jdbcType="INTEGER" property="age" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="createDate" jdbcType="DATE" property="createdate" />
+        <result column="role" jdbcType="INTEGER" property="role" />
+        <result column="birthday" jdbcType="DATE" property="birthday" />
+        <result column="uresp" jdbcType="INTEGER" property="uresp" />
+        <result column="salaryCard" jdbcType="VARCHAR" property="salarycard" />
+        <result column="nation" jdbcType="VARCHAR" property="nation" />
+        <result column="IdCard" jdbcType="VARCHAR" property="idcard" />
+        <result column="nickName" jdbcType="VARCHAR" property="nickname" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="realationTele" jdbcType="VARCHAR" property="realationtele" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, userName, password, gender, age, phone, email, createDate, role, birthday, uresp,
+    salaryCard, nation, IdCard, nickName, address, realationTele
+    </sql>
+    <select id="selectByExample" parameterType="com.ssm.entity.UserExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ssm.entity.UserExample">
+        delete from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ssm.entity.User">
+        insert into user (id, userName, password,
+                          gender, age, phone,
+                          email, createDate, role,
+                          birthday, uresp, salaryCard,
+                          nation, IdCard, nickName,
+                          address, realationTele)
+        values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+                #{gender,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR}, #{createdate,jdbcType=DATE}, #{role,jdbcType=INTEGER},
+                #{birthday,jdbcType=DATE}, #{uresp,jdbcType=INTEGER}, #{salarycard,jdbcType=VARCHAR},
+                #{nation,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR},
+                #{address,jdbcType=VARCHAR}, #{realationtele,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ssm.entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                userName,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="createdate != null">
+                createDate,
+            </if>
+            <if test="role != null">
+                role,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="uresp != null">
+                uresp,
+            </if>
+            <if test="salarycard != null">
+                salaryCard,
+            </if>
+            <if test="nation != null">
+                nation,
+            </if>
+            <if test="idcard != null">
+                IdCard,
+            </if>
+            <if test="nickname != null">
+                nickName,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="realationtele != null">
+                realationTele,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null">
+                #{createdate,jdbcType=DATE},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=INTEGER},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="uresp != null">
+                #{uresp,jdbcType=INTEGER},
+            </if>
+            <if test="salarycard != null">
+                #{salarycard,jdbcType=VARCHAR},
+            </if>
+            <if test="nation != null">
+                #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="idcard != null">
+                #{idcard,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="realationtele != null">
+                #{realationtele,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ssm.entity.UserExample" resultType="java.lang.Long">
+        select count(*) from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.username != null">
+                userName = #{record.username,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                password = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.gender != null">
+                gender = #{record.gender,jdbcType=INTEGER},
+            </if>
+            <if test="record.age != null">
+                age = #{record.age,jdbcType=INTEGER},
+            </if>
+            <if test="record.phone != null">
+                phone = #{record.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null">
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createdate != null">
+                createDate = #{record.createdate,jdbcType=DATE},
+            </if>
+            <if test="record.role != null">
+                role = #{record.role,jdbcType=INTEGER},
+            </if>
+            <if test="record.birthday != null">
+                birthday = #{record.birthday,jdbcType=DATE},
+            </if>
+            <if test="record.uresp != null">
+                uresp = #{record.uresp,jdbcType=INTEGER},
+            </if>
+            <if test="record.salarycard != null">
+                salaryCard = #{record.salarycard,jdbcType=VARCHAR},
+            </if>
+            <if test="record.nation != null">
+                nation = #{record.nation,jdbcType=VARCHAR},
+            </if>
+            <if test="record.idcard != null">
+                IdCard = #{record.idcard,jdbcType=VARCHAR},
+            </if>
+            <if test="record.nickname != null">
+                nickName = #{record.nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.address != null">
+                address = #{record.address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.realationtele != null">
+                realationTele = #{record.realationtele,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user
+        set id = #{record.id,jdbcType=INTEGER},
+        userName = #{record.username,jdbcType=VARCHAR},
+        password = #{record.password,jdbcType=VARCHAR},
+        gender = #{record.gender,jdbcType=INTEGER},
+        age = #{record.age,jdbcType=INTEGER},
+        phone = #{record.phone,jdbcType=VARCHAR},
+        email = #{record.email,jdbcType=VARCHAR},
+        createDate = #{record.createdate,jdbcType=DATE},
+        role = #{record.role,jdbcType=INTEGER},
+        birthday = #{record.birthday,jdbcType=DATE},
+        uresp = #{record.uresp,jdbcType=INTEGER},
+        salaryCard = #{record.salarycard,jdbcType=VARCHAR},
+        nation = #{record.nation,jdbcType=VARCHAR},
+        IdCard = #{record.idcard,jdbcType=VARCHAR},
+        nickName = #{record.nickname,jdbcType=VARCHAR},
+        address = #{record.address,jdbcType=VARCHAR},
+        realationTele = #{record.realationtele,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ssm.entity.User">
+        update user
+        <set>
+            <if test="username != null">
+                userName = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null">
+                createDate = #{createdate,jdbcType=DATE},
+            </if>
+            <if test="role != null">
+                role = #{role,jdbcType=INTEGER},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="uresp != null">
+                uresp = #{uresp,jdbcType=INTEGER},
+            </if>
+            <if test="salarycard != null">
+                salaryCard = #{salarycard,jdbcType=VARCHAR},
+            </if>
+            <if test="nation != null">
+                nation = #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="idcard != null">
+                IdCard = #{idcard,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickName = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="realationtele != null">
+                realationTele = #{realationtele,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ssm.entity.User">
+        update user
+        set userName = #{username,jdbcType=VARCHAR},
+            password = #{password,jdbcType=VARCHAR},
+            gender = #{gender,jdbcType=INTEGER},
+            age = #{age,jdbcType=INTEGER},
+            phone = #{phone,jdbcType=VARCHAR},
+            email = #{email,jdbcType=VARCHAR},
+            createDate = #{createdate,jdbcType=DATE},
+            role = #{role,jdbcType=INTEGER},
+            birthday = #{birthday,jdbcType=DATE},
+            uresp = #{uresp,jdbcType=INTEGER},
+            salaryCard = #{salarycard,jdbcType=VARCHAR},
+            nation = #{nation,jdbcType=VARCHAR},
+            IdCard = #{idcard,jdbcType=VARCHAR},
+            nickName = #{nickname,jdbcType=VARCHAR},
+            address = #{address,jdbcType=VARCHAR},
+            realationTele = #{realationtele,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="findUserByRole3" resultType="com.ssm.entity.User">
+        select u.* from user u left join bed b on b.uid = u.id where b.status = 1
+    </select>
+
+</mapper>
